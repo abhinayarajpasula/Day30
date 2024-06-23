@@ -60,16 +60,20 @@ button {
 }
 
 /* Button Colors */
+/* App.css */
 .add-button {
-  background-color: #007bff;
+  background-color: blue;
+  color: white;
 }
 
 .edit-button {
-  background-color: #28a745;
+  background-color: green;
+  color: white;
 }
 
 .delete-button {
-  background-color: #dc3545;
+  background-color: red;
+  color: white;
 }
 
 /* User List Styles */

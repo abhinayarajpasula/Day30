@@ -21,24 +21,27 @@ const App = () => {
     }
   };
 
-  const addUser = async (user) => {
-    try {
-      const newUser = { ...user, id: Date.now() }; // Generate a unique ID
-      setUsers([...users, newUser]);
-    } catch (error) {
-      console.error('Error adding user:', error);
-    }
+  const addUser = (user) => {
+    const newUser = { ...user, id: Date.now() }; // Generate a unique ID for new user
+    setUsers([...users, newUser]);
   };
 
   const updateUser = async (user) => {
     console.log('Updating user:', user); // Debugging line
     try {
-      const response = await axios.put(`https://jsonplaceholder.typicode.com/users/${user.id}`, {
-        name: user.name,
-        email: user.email
-      });
-      console.log('Response from server:', response); // Debugging line
-      setUsers(users.map(u => (u.id === user.id ? response.data : u)));
+      // Check if user ID is greater than 10, assuming API has only 10 users
+      if (user.id > 10) {
+        // Simulate update for locally added users
+        setUsers(users.map(u => (u.id === user.id ? user : u)));
+      } else {
+        // Update for API users
+        const response = await axios.put(`https://jsonplaceholder.typicode.com/users/${user.id}`, {
+          name: user.name,
+          email: user.email
+        });
+        console.log('Response from server:', response.data); // Debugging line
+        setUsers(users.map(u => (u.id === user.id ? response.data : u)));
+      }
       setEditingUser(null); // Clear editing state after update
     } catch (error) {
       console.error('Error updating user:', error);
